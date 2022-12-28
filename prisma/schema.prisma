@@ -9,3 +9,14 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Coffee {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  brand       String
+  description String
+  flavours    String[]
+  ingredients String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
