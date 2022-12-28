@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Coffee {
+model Coffees {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   brand       String
@@ -19,4 +19,6 @@ model Coffee {
   ingredients String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@map("coffees")
 }
