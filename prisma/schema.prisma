@@ -12,7 +12,7 @@ datasource db {
 
 model Coffees {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
+  title       String   @unique
   brand       String
   description String
   flavours    String[]

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCoffeeDto } from './dto/coffee.dto';
 import { PaginationDto } from './dto/pagination.dto';
@@ -17,9 +17,14 @@ export class CoffeeService {
   }
 
   async createCoffee(createCoffeeDto: CreateCoffeeDto): Promise<Coffee> {
-    const coffee = await this.prisma.coffees.create({
-      data: createCoffeeDto,
-    });
-    return coffee;
+    try {
+      const coffee = await this.prisma.coffees.create({
+        data: createCoffeeDto,
+      });
+      return coffee;
+    } catch (error) {
+      if (error.code === 'P2002')
+        throw new ConflictException('Coffee with same name already exist.');
+    }
   }
 }
