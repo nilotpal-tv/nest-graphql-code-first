@@ -1,8 +1,8 @@
-import { ParseIntPipe } from '@nestjs/common';
-import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CoffeeService } from './coffee.service';
-import { CreateCoffeeDto } from './dto/coffee.dto';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { PaginationDto } from './dto/pagination.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
 
 @Resolver()
@@ -20,14 +20,12 @@ export class CoffeeResolver {
 
   @Query(() => Coffee, { name: 'coffeeByTitle', nullable: true })
   async findByTitle(@Args('title') title: string): Promise<Coffee> {
-    return null;
+    return await this.coffeeService.findByTitle(title);
   }
 
   @Query(() => Coffee, { name: 'coffeeById', nullable: true })
-  async findById(
-    @Args('id', { type: () => ID }, ParseIntPipe) id: number,
-  ): Promise<Coffee> {
-    return null;
+  async findById(@Args('id') id: string): Promise<Coffee> {
+    return await this.coffeeService.findById(id);
   }
 
   @Mutation(() => Coffee)
@@ -35,7 +33,23 @@ export class CoffeeResolver {
     @Args('createCoffeeInput', { type: () => CreateCoffeeDto })
     createCoffeeInput: CreateCoffeeDto,
   ): Promise<Coffee> {
-    const coffee = await this.coffeeService.createCoffee(createCoffeeInput);
+    const coffee = await this.coffeeService.create(createCoffeeInput);
     return coffee;
+  }
+
+  @Mutation(() => Coffee)
+  async updateCoffee(
+    @Args('updateCoffeeInput', { type: () => UpdateCoffeeDto })
+    updateCoffeeDto: UpdateCoffeeDto,
+  ): Promise<Coffee> {
+    return await this.coffeeService.update(updateCoffeeDto);
+  }
+
+  @Mutation(() => Coffee)
+  async deleteCoffee(
+    @Args('id')
+    id: string,
+  ): Promise<Coffee> {
+    return await this.coffeeService.delete(id);
   }
 }
