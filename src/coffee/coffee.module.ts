@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { CoffeeService } from './coffee.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CoffeeResolver } from './coffee.resolver';
+import { CoffeeService } from './coffee.service';
 
 @Module({
-  providers: [CoffeeService, CoffeeResolver],
+  providers: [CoffeeService, CoffeeResolver, PrismaService],
 })
 export class CoffeeModule {}
