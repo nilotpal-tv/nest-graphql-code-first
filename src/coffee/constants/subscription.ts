@@ -1,0 +1,3 @@
+export const COFFEE_ADDED = 'COFFEE_ADDED';
+export const COFFEE_UPDATED = 'COFFEE_UPDATED';
+export const COFFEE_REMOVED = 'COFFEE_REMOVED';

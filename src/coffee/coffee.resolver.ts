@@ -1,9 +1,17 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import { PubSub } from 'graphql-subscriptions';
 import { CoffeeService } from './coffee.service';
+import {
+  COFFEE_ADDED,
+  COFFEE_REMOVED,
+  COFFEE_UPDATED,
+} from './constants/subscription';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
+
+const pubSub = new PubSub();
 
 @Resolver()
 export class CoffeeResolver {
@@ -34,6 +42,7 @@ export class CoffeeResolver {
     createCoffeeInput: CreateCoffeeDto,
   ): Promise<Coffee> {
     const coffee = await this.coffeeService.create(createCoffeeInput);
+    pubSub.publish(COFFEE_ADDED, { coffeeAddedSubscription: coffee });
     return coffee;
   }
 
@@ -51,5 +60,10 @@ export class CoffeeResolver {
     id: string,
   ): Promise<Coffee> {
     return await this.coffeeService.delete(id);
+  }
+
+  @Subscription(() => Coffee, { name: 'coffeeAddedSubscription' })
+  async coffeeAdded() {
+    return pubSub.asyncIterator(COFFEE_ADDED);
   }
 }
