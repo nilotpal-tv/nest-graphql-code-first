@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { CoffeeService } from './coffee.service';
-import { COFFEE_ADDED } from './constants/subscription';
+import { COFFEE_ADDED } from './constants/subscriptions';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
