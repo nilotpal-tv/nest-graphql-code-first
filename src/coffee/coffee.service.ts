@@ -9,7 +9,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
-import { Coffee } from './entities/coffee.entity';
+import { Coffee } from './model/coffee.model';
 
 @Injectable()
 export class CoffeeService {

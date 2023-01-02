@@ -5,7 +5,7 @@ import { COFFEE_ADDED } from './constants/subscription';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
-import { Coffee } from './entities/coffee.entity';
+import { Coffee } from './model/coffee.model';
 
 const pubSub = new PubSub();
 
